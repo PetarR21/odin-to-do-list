@@ -1,0 +1,421 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', 'sans-serif';
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+header {
+    background-color: #047aed;
+    color: #fff;
+    height: 12.5%;
+    border-bottom: 1px solid rgb(185, 185, 185);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 30px;
+}
+
+header h1 {
+    font-size: 48px;
+}
+
+
+#sidebar-main {
+    display: flex;
+    height: 87.5%;
+}
+
+#side-bar {
+    background-color: #eeeeee;
+    color: #013a72;
+    width: 12.5%;
+    border-right: 1px solid rgb(185, 185, 185);
+    padding-left: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#side-bar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+#side-bar li:not(#projects) {
+    cursor: pointer;
+}
+
+#side-bar li:not(#projects):hover {
+    color: #047aed;
+}
+
+#home, #today, #week, #projects, #notes {
+    font-weight: 500;
+    font-size: 26px;
+}
+
+#side-bar-secondary {
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+#add-btn {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 100px;
+    outline: none;
+    background: #047aed;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    font-size: 42px;
+}
+
+#add-btn:hover {
+    animation: rotateAnimation 0.4s ease-in;
+}
+
+.selected {
+    color: #047aed;
+}
+
+#content {
+    background-color: rgb(247, 247, 247);
+    width: 87.5%;
+}
+
+.hidden {
+    display: none;
+}
+
+.closeAnimationClass {
+    animation: closeAnimation 0.2s ease-in;
+
+}
+
+.openAnimationClass {
+    display: block;
+    animation: openAnimation 0.2s linear;
+}
+
+.blur {
+    filter: blur(8px);
+}
+
+#overlay {
+    width: 960px;
+    height: 480px;
+    z-index: 5;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -480px;
+    margin-top: -240px;
+    border: 1px solid rgb(185, 185, 185);
+}
+
+#overlay-header {
+    background-color: #047aed;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-size: 22px;
+    height: 15%;
+}
+
+#overlay-header button {
+    width: 30px;
+    height: 40px;
+    font-size: 28px;
+    font-weight: 600;
+    border: none;
+    color: #fff;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#overlay-header button:hover {
+    filter: brightness(80%);
+}
+
+#overlay-content {
+    display: flex;
+    height: 85%;
+}
+
+#overlay-sidebar {
+    background-color: #eeeeee;
+    color: #013a72;
+    width: 15%;
+    border-right: 1px solid rgb(185, 185, 185);
+    padding: 20px;
+}
+
+#overlay-sidebar ul {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    font-size: 20px;
+    font-weight: 500;
+    width: 85%;
+}
+
+#overlay-sidebar li:hover {
+    color: #047aed;
+    cursor: pointer;
+}
+
+#overlay-to-do {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: white;
+}
+
+#overlay-to-do #title, #details {
+    outline: none;
+    font-size: 20px;
+    border: none;
+
+}
+
+#overlay-to-do #date-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 20px;
+    color: #013a72;
+}
+
+#overlay-to-do #date {
+    padding: 0.5rem 1rem;
+    border: 1px solid #013a72;
+    border-radius: 5px;
+    color: #013a72;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+
+}
+
+#overlay-to-do #priority-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+#overlay-to-do #priority {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#overlay-to-do #priority p {
+    font-size: 20px;
+    color: #013a72;
+    width: 86px;
+}
+
+#overlay-to-do #priority input {
+    position: absolute;
+    opacity: 0;
+}
+
+#overlay-to-do #priority #radio-buttons {
+    display: flex;
+}
+
+#overlay-to-do #priority label {
+    position: relative;
+    font-weight: 500;
+    padding: 6px 12px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+label[for="input-low"] {
+    border: 1px solid green;
+    color: green;
+}
+
+#overlay-to-do #priority #input-low:checked+label[for="input-low"], label[for="input-low"]:hover {
+    background-color: green;
+    color: #fff;
+}
+
+label[for="input-mid"] {
+    border: 1px solid orange;
+    color: orange;
+}
+
+#overlay-to-do #priority #input-mid:checked+label[for="input-mid"], label[for="input-mid"]:hover {
+    background-color: orange;
+    color: #fff;
+}
+
+label[for="input-high"] {
+    border: 1px solid red;
+    color: red;
+}
+
+#overlay-to-do #priority #input-high:checked+label[for="input-high"], label[for="input-high"]:hover {
+    background-color: red;
+    color: #fff;
+}
+
+#overlay-to-do #btn-submit {
+    padding: 6px 12px;
+    font-size: 16px;
+    color: #013a72;
+    border: 1px solid #013a72;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+#overlay-to-do #btn-submit:hover {
+    background-color: #013a72;
+    color: #fff;
+}
+
+#content {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.to-do-element {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 25px 40px;
+    background-color: #eeeeee;
+    width: 100%;
+    display: flex;
+    font-size: 20px;
+    color: #013a72;
+    font-weight: 500;
+}
+
+.to-do-element:hover {
+    -webkit-transform: scale(1.003);
+    transform: scale(1.003);
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -webkit-box-shadow: 3px 3px 5px 2px rgb(0 0 0 / 20%);
+    box-shadow: 3px 3px 5px 2px rgb(0 0 0 / 20%);
+    -webkit-transition: all .2s ease-out;
+    transition: all .2s ease-out;
+}
+
+.to-do-element-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.to-do-element-right {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.to-do-element-title {
+    overflow: auto;
+}
+
+.to-do-element input {
+    height: 20px;
+    width: 20px;
+    background-color: white;
+    border: 3px solid #3ba395;
+    border-radius: 4px;
+    cursor: pointer;
+    accent-color: #3ba395;
+}
+
+
+.to-do-element button {
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: transparent;
+    border: 2px solid #3ba395;
+    color: #3ba395;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.to-do-element button:hover {
+    background-color: #3ba395;
+    color: white;
+}
+
+.to-do-element i:hover {
+    color: #3ba395;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(90deg);
+    }
+}
+
+@keyframes closeAnimation {
+    0% {
+        transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(0.0);
+    }
+}
+
+@keyframes openAnimation {
+    0% {
+        transform: scale(0.1);
+    }
+
+    50% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1.0);
+    }
+}
