@@ -68,6 +68,21 @@ class UI {
         const StoredItems = [
             new ToDoItem('Item1', 'Details1', '2022-04-15', 'high'),
             new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
+            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
         ]
 
         StoredItems.forEach(item => {
