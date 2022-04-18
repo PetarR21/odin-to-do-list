@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/25e9f6f78b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style2.css">
     <script src="script.js" defer></script>
     <title>Todo List</title>
 </head>
@@ -22,18 +23,11 @@
                 <li id="home" class="selected">Home</li>
                 <li id="today">Today</li>
                 <li id="week">Week</li>
-                <li id="projects">Projects</li>
-                <ul id="side-bar-secondary">
-                    <li>Gym</li>
-                    <li>Study</li>
-                    <li>Work</li>
-                </ul>
-                <li id="notes">Notes</li>
             </ul>
             <button id="add-btn">+</button>
         </section>
         <main id="content">
-            <div class="to-do-element">
+            <!--<div class="to-do-element">
                 <div class="to-do-element-left">
                     <input class="to-do-element-checkbox" type="checkbox">
                     <p class="to-do-element-title">
@@ -43,66 +37,10 @@
                 <div class="to-do-element-right">
                     <button class="details">DETAILS</button>
                     <p>Apr 14th</p>
-                    <i class="fa-solid fa-pen-to-square"></i>
+                    <i class="fa-solid fa-pen-to-square" id="to-do-element-edit"></i>
                     <i class="fa-solid fa-trash-can"></i>
                 </div>
-            </div>
-            <div class="to-do-element">
-                <div class="to-do-element-left">
-                    <input class="to-do-element-checkbox" type="checkbox">
-                    <p class="to-do-element-title">
-                        TITLE
-                    </p>
-                </div>
-                <div class="to-do-element-right">
-                    <button class="details">DETAILS</button>
-                    <p>Apr 14th</p>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="to-do-element">
-                <div class="to-do-element-left">
-                    <input class="to-do-element-checkbox" type="checkbox">
-                    <p class="to-do-element-title">
-                        TITLE
-                    </p>
-                </div>
-                <div class="to-do-element-right">
-                    <button class="details">DETAILS</button>
-                    <p>Apr 14th</p>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="to-do-element">
-                <div class="to-do-element-left">
-                    <input class="to-do-element-checkbox" type="checkbox">
-                    <p class="to-do-element-title">
-                        TITLE
-                    </p>
-                </div>
-                <div class="to-do-element-right">
-                    <button class="details">DETAILS</button>
-                    <p>Apr 14th</p>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-            </div>
-            <div class="to-do-element">
-                <div class="to-do-element-left">
-                    <input class="to-do-element-checkbox" type="checkbox">
-                    <p class="to-do-element-title">
-                        TITLE
-                    </p>
-                </div>
-                <div class="to-do-element-right">
-                    <button class="details">DETAILS</button>
-                    <p>Apr 14th</p>
-                    <i class="fa-solid fa-pen-to-square"></i>
-                    <i class="fa-solid fa-trash-can"></i>
-                </div>
-            </div>
+            </div>-->
         </main>
     </div>
 </body>
@@ -115,8 +53,6 @@
         <div id="overlay-sidebar">
             <ul id="overlay-list">
                 <li id="overlay-li1" class="selected">To Do</li>
-                <li id="overlay-li2">Project</li>
-                <li id="overlay-li3">Note</li>
             </ul>
         </div>
         <form id="overlay-to-do">
@@ -129,7 +65,7 @@
             </div>
             <div id="priority-btn">
                 <div id="priority">
-                    <p>Priority: </p>
+                    <p>Priority:</p>
                     <div id="radio-buttons">
                         <input name="radio-group" type="radio" id="input-low" value="low" placeholder="LOW">
                         <label for="input-low">Low</label>
@@ -141,9 +77,60 @@
                 </div>
                 <input type="submit" id="btn-submit" value="ADD TO DO">
             </div>
+        </form>
     </div>
 
 </div>
+
+<div id="details-overlay" class="hidden">
+    <div class="details-overlay-title">
+        <p class="value">TITLE</p>
+        <span id="closeDetailsOverlay">
+            X
+        </span>
+    </div>
+    <div class="details-overlay-priority">
+        <p>Priority:</p>
+        <p class="value">low</p>
+    </div>
+    <div class="details-overlay-date">
+        <p>Due Date:</p>
+        <p class="value">April 14th, 2022</p>
+    </div>
+    <div class="details-overlay-details">
+        <p>Details:</p>
+        <p class="value">Write down some</p>
+    </div>
+</div>
+
+<form id="edit-overlay" class="p-20 hidden">
+    <div id="edit-close-btn">X</div>
+    <div class="flex-col container">
+        <input type="text" placeholder="Title: Pay bills" class="f-20">
+        <textarea name="details" id="details" cols="30" rows="7" placeholder="Details: e.g interent, phone, rent"
+            class="f-20" style="resize: none;"></textarea>
+        <div id="edit-overlay-date" class="flex">
+            <p class="f-20 text-secondary">Due Date:</p>
+            <input type="date">
+        </div>
+        <div id="edit-overlay-priority" class="flex">
+            <p class="f-20 text-secondary">Priority:</p>
+            <div>
+                <input name="edit-radio" type="radio" id="edit-low">
+                <label for="edit-low">Low</label>
+                <input name="edit-radio" type="radio" id="edit-mid">
+                <label for="edit-mid">Medium</label>
+                <input name="edit-radio" type="radio" id="edit-high">
+                <label for="edit-high">High</label>
+            </div>
+        </div>
+    </div>
+    <div id="edit-confirm">
+        <input type="submit" value="CONFIRM CHANGES">
+    </div>
+</form>
+
+
 </div>
 
 </html>

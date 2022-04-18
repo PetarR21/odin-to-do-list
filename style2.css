@@ -1,0 +1,189 @@
+:root {
+    --color-primary: #047aed;
+    --color-secondary: #013a72;
+}
+
+html {
+    height: 100vh;
+    position: relative;
+}
+
+#edit-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    width: 820px;
+    height: 420px;
+    margin-top: -210px;
+    margin-left: -410px;
+    background-color: #ffffff;
+    border: 1px solid rgb(185, 185, 185);
+}
+
+#edit-overlay #edit-confirm {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#edit-overlay input[type="text"] {
+    border: none;
+    color: #013a72;
+}
+
+#edit-overlay input[type="text"]:focus {
+    outline: none;
+}
+
+#edit-overlay input[type="text"], textarea {
+    background-color: transparent;
+    color: #013a72;
+}
+
+#edit-overlay #edit-overlay-date {
+    gap: 20px;
+}
+
+#edit-overlay #edit-overlay-date p {
+    width: 90px;
+}
+
+#edit-overlay #edit-overlay-date input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #013a72;
+    border-radius: 5px;
+    color: #013a72;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+#edit-overlay #edit-overlay-priority {
+    gap: 20px;
+}
+
+#edit-overlay #edit-overlay-priority p {
+    width: 90px;
+}
+
+#edit-overlay input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+#edit-overlay label {
+    position: relative;
+    font-weight: 500;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#edit-overlay label[for="edit-low"] {
+    border: 1px solid green;
+    color: green;
+}
+
+#edit-overlay label[for="edit-low"]:hover {
+    background-color: green;
+    color: #fff;
+}
+
+#edit-overlay input[id="edit-low"]:checked+label[for="edit-low"] {
+    background-color: green;
+    color: #fff;
+}
+
+#edit-overlay label[for="edit-mid"] {
+    border: 1px solid orange;
+    color: orange;
+}
+
+#edit-overlay label[for="edit-mid"]:hover {
+    background-color: orange;
+    color: #fff;
+}
+
+#edit-overlay input[id="edit-mid"]:checked+label[for="edit-mid"] {
+    background-color: orange;
+    color: #fff;
+}
+
+#edit-overlay label[for="edit-high"] {
+    border: 1px solid red;
+    color: red;
+}
+
+#edit-overlay label[for="edit-high"]:hover {
+    background-color: red;
+    color: #fff;
+}
+
+#edit-overlay input[id="edit-high"]:checked+label[for="edit-high"] {
+    background-color: red;
+    color: #fff;
+}
+
+#edit-overlay input[type="submit"] {
+    padding: 6px 12px;
+    color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+    font-weight: 500;
+}
+
+
+#edit-overlay input[type="submit"]:hover {
+    background-color: var(--color-secondary);
+    color: #fff;
+}
+
+#edit-close-btn{
+    position: absolute;
+    right: 20px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: 600;
+    border: none;
+    color: var(--color-secondary);
+    background-color: transparent;
+    cursor: pointer;
+}
+
+#edit-close-btn:hover{
+    color: var(--color-primary);
+}
+/*Utilities*/
+.container {
+    height: 100%;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.p-20 {
+    padding: 20px;
+}
+
+.f-20 {
+    font-size: 20px;
+}
+
+.text-primary {
+    color: var(--color-primary);
+    font-weight: 500;
+}
+
+.text-secondary {
+    color: var(--color-secondary);
+    font-weight: 400;
+}

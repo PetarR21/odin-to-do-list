@@ -58,7 +58,7 @@ header h1 {
 #side-bar ul {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: 40px;
 }
 
 #side-bar li:not(#projects) {
@@ -106,7 +106,7 @@ header h1 {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 .closeAnimationClass {
@@ -122,6 +122,20 @@ header h1 {
 .blur {
     filter: blur(8px);
 }
+
+.borderLeftOrange {
+    border-left: 5px solid orange;
+}
+
+.borderLeftGreen {
+    border-left: 5px solid green;
+}
+
+.borderLeftRed {
+    border-left: 5px solid red;
+}
+
+
 
 #overlay {
     width: 960px;
@@ -201,7 +215,7 @@ header h1 {
     outline: none;
     font-size: 20px;
     border: none;
-
+    color: #013a72;
 }
 
 #overlay-to-do #date-container {
@@ -309,14 +323,14 @@ label[for="input-high"] {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 12px;
+    gap: 15px;
 }
 
 .to-do-element {
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    padding: 25px 40px;
+    padding: 20px 40px;
     background-color: #eeeeee;
     width: 100%;
     display: flex;
@@ -352,6 +366,14 @@ label[for="input-high"] {
     overflow: auto;
 }
 
+.lineTrough {
+    text-decoration: line-through;
+}
+
+.opacity04 {
+    opacity: 0.4;
+}
+
 .to-do-element input {
     height: 20px;
     width: 20px;
@@ -380,6 +402,64 @@ label[for="input-high"] {
 
 .to-do-element i:hover {
     color: #3ba395;
+}
+
+#details-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -140px;
+    margin-left: -350px;
+    box-shadow: 0 2rem 4rem rgb(0 0 0 / 60%);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 40px 20px;
+    width: 700px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#details-overlay div {
+    display: flex;
+    align-items: center;
+}
+
+#details-overlay .details-overlay-title {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#details-overlay p:first-child {
+    width: 120px;
+    color: #013a72;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+#details-overlay p:nth-child(2) {
+    color: #047aed;
+}
+
+
+#details-overlay .details-overlay-details p:nth-child(2) {
+    overflow: auto;
+    max-width: 450px;
+    max-height: 25px;
+}
+
+#closeDetailsOverlay {
+    font-weight: 600;
+    font-size: 20px;
+    color: #013a72;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#closeDetailsOverlay:hover {
+    filter: brightness(60%);
 }
 
 @keyframes rotateAnimation {
