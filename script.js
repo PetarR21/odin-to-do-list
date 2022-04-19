@@ -67,6 +67,18 @@ class ToDoList {
             }
         })
     }
+
+    toggleItem(id) {
+        this.list.forEach((item) => {
+            if (item.id === id) {
+                if (item.completed === false) {
+                    item.completed = true;
+                } else {
+                    item.completed = false;
+                }
+            }
+        })
+    }
 }
 
 class UI {
@@ -87,18 +99,19 @@ class UI {
     }
 
     static createNewToDoElement(item) {
+        console.log(item.completed);
         return `
         <div class="to-do-element-left">
-            <input class="to-do-element-checkbox" type="checkbox" checked="${item.completed}">
-            <p class="to-do-element-title">
+            <input class="to-do-element-checkbox" type="checkbox" ${(item.completed===true)?("checked=true"):""}>
+            <p class="to-do-element-title ${(item.completed===true)?("lineTrough opacity04"):""}">
                 ${item.title}
             </p>
         </div>
         <div class="to-do-element-right">
-            <button class="details">DETAILS</button>
-            <p>${item.date}</p>
-            <i class="fa-solid fa-pen-to-square edit-btn" id="to-do-element-edit"></i>
-            <i class="fa-solid fa-trash-can delete-btn"></i>
+            <button class="details ${(item.completed===true)?("opacity04"):""}">DETAILS</button>
+            <p class="date ${(item.completed===true)?("opacity04"):""}">${item.date}</p>
+            <i class="fa-solid fa-pen-to-square edit-btn ${(item.completed===true)?("opacity04"):""}" id="to-do-element-edit"></i>
+            <i class="fa-solid fa-trash-can delete-btn ${(item.completed===true)?("opacity04"):""}"></i>
         </div>`
     }
 
@@ -108,6 +121,8 @@ class UI {
         const toDoElement = document.createElement('div');
         toDoElement.setAttribute('data-id', `${item.id}`);
         toDoElement.classList.add('to-do-element');
+        
+
         if (item.priority === 'high') {
             toDoElement.classList.add('borderLeftRed');
         } else if (item.priority === 'mid') {
@@ -154,12 +169,11 @@ class UI {
         const deleteBtn = element.querySelector('.delete-btn');
         const detailsBtn = element.querySelector('.details')
         const editBtn = element.querySelector('.edit-btn')
-
+        const checkButton = element.querySelector('.to-do-element-checkbox');
+        
         deleteBtn.addEventListener('click', () => {
-            console.log(this.list);
             this.list.removeItem(parseInt(element.dataset.id));
             element.remove();
-            console.log(this.list);
         })
 
         detailsBtn.addEventListener('click', () => {
@@ -170,6 +184,15 @@ class UI {
         editBtn.addEventListener('click', () => {
             this.openEdit();
             this.setEdit(element);
+        })
+
+        checkButton.addEventListener('click', () => {
+            this.list.toggleItem(parseInt(element.dataset.id));
+            element.querySelector('.to-do-element-title').classList.toggle('lineTrough');
+            element.querySelector('.to-do-element-title').classList.toggle('opacity04');
+            element.querySelectorAll('.to-do-element-right > *').forEach(e => {
+                e.classList.toggle('opacity04');
+            })
         })
 
     }
@@ -246,9 +269,24 @@ class UI {
     }
 
     static updateElement(id, newTitle, newDetails, newDate, newPriority) {
-        console.log(this.list.getList());
+
         this.list.updateItem(id, newTitle, newDetails, newDate, newPriority);
-        console.log(this.list.getList());
+        const element = document.querySelector(`[data-id="${id}"]`);
+
+        element.querySelector('.to-do-element-title').textContent = newTitle;
+        element.querySelector('.date').textContent = newDate;
+
+        element.classList = "";
+        element.classList.add('to-do-element');
+
+        if (newPriority === 'high') {
+            element.classList.add('borderLeftRed');
+        } else if (newPriority === 'mid') {
+            element.classList.add('borderLeftOrange');
+        } else {
+            element.classList.add('borderLeftGreen');
+        }
+
     }
 }
 
@@ -285,6 +323,7 @@ document.querySelector('#edit-overlay').addEventListener('submit', (e) => {
     const priority = document.querySelector('#edit-overlay input[type="radio"]:checked').dataset.value;
 
     UI.updateElement(id, title, details, date, priority);
+    UI.closeEdit();
 })
 
 //Event: Submit overlay form and add item to list
