@@ -367,9 +367,7 @@ class UI {
                         e.classList.add('hidden');
                     }
                 })
-            } else {
-                
-            }
+            } 
         }
     }
 }
