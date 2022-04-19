@@ -139,7 +139,7 @@ html {
     color: #fff;
 }
 
-#edit-close-btn{
+#edit-close-btn {
     position: absolute;
     right: 20px;
     height: 40px;
@@ -151,9 +151,13 @@ html {
     cursor: pointer;
 }
 
-#edit-close-btn:hover{
+#edit-close-btn:hover {
     color: var(--color-primary);
 }
+
+
+
+
 /*Utilities*/
 .container {
     height: 100%;

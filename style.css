@@ -7,7 +7,7 @@
     font-family: 'Roboto', 'sans-serif';
 }
 
-html,body {
+html, body {
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,6 @@ header h1 {
     font-size: 48px;
 }
 
-
 #sidebar-main {
     display: flex;
     height: 87.5%;
@@ -58,7 +57,7 @@ header h1 {
 #side-bar ul {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
 }
 
 #side-bar li:not(#projects) {

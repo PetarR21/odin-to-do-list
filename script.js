@@ -19,6 +19,51 @@ class ToDoItem {
     }
 }
 
+class Store {
+    static getItems() {
+        let storageList = localStorage.getItem("storageList") ? JSON.parse(localStorage.getItem('storageList')) : [];
+
+        return storageList;
+    }
+
+    static updateStorageIDs() {
+        let storageList = Store.getItems();
+        let c = 0;
+        storageList.forEach((e) => {
+            e.id = c++;
+        })
+        localStorage.setItem('storageList', JSON.stringify(storageList));
+    }
+
+    static addItem(item) {
+        let storageList = Store.getItems();
+        storageList.push(item);
+
+        localStorage.setItem('storageList', JSON.stringify(storageList));
+    }
+
+    static updateItem(item) {
+        let storageList = Store.getItems();
+
+        storageList.forEach((e, index) => {
+            if (e.id === item.id) {
+                storageList[index] = item;
+            }
+        })
+        localStorage.setItem('storageList', JSON.stringify(storageList));
+    }
+
+    static removeItem(id) {
+        let storageList = Store.getItems();
+        storageList.forEach((e, index) => {
+            if (e.id === id) {
+                storageList.splice(index, 1);
+            }
+        })
+        localStorage.setItem('storageList', JSON.stringify(storageList));
+    }
+}
+
 class ToDoList {
     constructor() {
         this.list = [];
@@ -58,17 +103,24 @@ class ToDoList {
     }
 
     updateItem(id, title, details, date, priority) {
+        let returnItem;
+
         this.list.forEach((item) => {
             if (item.id === id) {
                 item.title = title;
                 item.details = details;
                 item.date = date;
                 item.priority = priority;
+                returnItem = item;
             }
         })
+
+        return returnItem;
     }
 
     toggleItem(id) {
+        let returnItem;
+
         this.list.forEach((item) => {
             if (item.id === id) {
                 if (item.completed === false) {
@@ -76,8 +128,19 @@ class ToDoList {
                 } else {
                     item.completed = false;
                 }
+                returnItem = item;
             }
         })
+
+        return returnItem;
+    }
+
+    setIDCounter(id) {
+        this.idCounter = id;
+    }
+
+    getIDCounter() {
+        return this.idCounter;
     }
 }
 
@@ -87,31 +150,26 @@ class UI {
     }
 
     static displayItems() {
-
-        const StoredItems = [
-            new ToDoItem('Item1', 'Details1', '2022-04-15', 'high'),
-            new ToDoItem('Item2', 'Details3', '2022-06-09', 'low'),
-        ]
-
+        Store.updateStorageIDs();
+        const StoredItems = Store.getItems();
         StoredItems.forEach(item => {
             UI.addItemToList(item);
         });
     }
 
     static createNewToDoElement(item) {
-        console.log(item.completed);
         return `
         <div class="to-do-element-left">
-            <input class="to-do-element-checkbox" type="checkbox" ${(item.completed===true)?("checked=true"):""}>
-            <p class="to-do-element-title ${(item.completed===true)?("lineTrough opacity04"):""}">
+            <input class="to-do-element-checkbox" type="checkbox" ${(item.completed === true) ? ("checked=true") : ""}>
+            <p class="to-do-element-title ${(item.completed === true) ? ("lineTrough opacity04") : ""}">
                 ${item.title}
             </p>
         </div>
         <div class="to-do-element-right">
-            <button class="details ${(item.completed===true)?("opacity04"):""}">DETAILS</button>
-            <p class="date ${(item.completed===true)?("opacity04"):""}">${item.date}</p>
-            <i class="fa-solid fa-pen-to-square edit-btn ${(item.completed===true)?("opacity04"):""}" id="to-do-element-edit"></i>
-            <i class="fa-solid fa-trash-can delete-btn ${(item.completed===true)?("opacity04"):""}"></i>
+            <button class="details ${(item.completed === true) ? ("opacity04") : ""}">DETAILS</button>
+            <p class="date ${(item.completed === true) ? ("opacity04") : ""}">${item.date}</p>
+            <i class="fa-solid fa-pen-to-square edit-btn ${(item.completed === true) ? ("opacity04") : ""}" id="to-do-element-edit"></i>
+            <i class="fa-solid fa-trash-can delete-btn ${(item.completed === true) ? ("opacity04") : ""}"></i>
         </div>`
     }
 
@@ -121,7 +179,7 @@ class UI {
         const toDoElement = document.createElement('div');
         toDoElement.setAttribute('data-id', `${item.id}`);
         toDoElement.classList.add('to-do-element');
-        
+
 
         if (item.priority === 'high') {
             toDoElement.classList.add('borderLeftRed');
@@ -170,9 +228,10 @@ class UI {
         const detailsBtn = element.querySelector('.details')
         const editBtn = element.querySelector('.edit-btn')
         const checkButton = element.querySelector('.to-do-element-checkbox');
-        
+
         deleteBtn.addEventListener('click', () => {
             this.list.removeItem(parseInt(element.dataset.id));
+            Store.removeItem(parseInt(element.dataset.id));
             element.remove();
         })
 
@@ -187,7 +246,8 @@ class UI {
         })
 
         checkButton.addEventListener('click', () => {
-            this.list.toggleItem(parseInt(element.dataset.id));
+            let newItem = this.list.toggleItem(parseInt(element.dataset.id));
+            Store.updateItem(newItem);
             element.querySelector('.to-do-element-title').classList.toggle('lineTrough');
             element.querySelector('.to-do-element-title').classList.toggle('opacity04');
             element.querySelectorAll('.to-do-element-right > *').forEach(e => {
@@ -270,7 +330,8 @@ class UI {
 
     static updateElement(id, newTitle, newDetails, newDate, newPriority) {
 
-        this.list.updateItem(id, newTitle, newDetails, newDate, newPriority);
+        const newItem = this.list.updateItem(id, newTitle, newDetails, newDate, newPriority);
+        Store.updateItem(newItem);
         const element = document.querySelector(`[data-id="${id}"]`);
 
         element.querySelector('.to-do-element-title').textContent = newTitle;
@@ -287,6 +348,29 @@ class UI {
             element.classList.add('borderLeftGreen');
         }
 
+    }
+
+    static addFilter(name) {
+        const toDoElements = document.querySelectorAll('#content .to-do-element');
+
+        if (toDoElements.length !== 0) {
+            if (name === 'home') {
+                toDoElements.forEach(e => {
+                    e.classList.remove('hidden');
+                })
+            } else if (name === 'today') {
+                const todayDate = getTodayDate();
+                toDoElements.forEach(e => {
+                    const elementDate = e.querySelector('.date').textContent;
+                    console.log(elementDate + " " + todayDate);
+                    if (elementDate !== todayDate) {
+                        e.classList.add('hidden');
+                    }
+                })
+            } else {
+                
+            }
+        }
     }
 }
 
@@ -336,7 +420,26 @@ document.querySelector('#overlay-to-do').addEventListener('submit', (e) => {
     const date = formValues.date;
     const priority = formValues.priority;
 
-    UI.addItemToList(new ToDoItem(title, details, date, priority));
+    const item = new ToDoItem(title, details, date, priority);
+
+    UI.addItemToList(item);
+    Store.addItem(item);
     UI.clearFormValues();
     UI.closeOverlay();
+})
+
+const sideBarButtons = document.querySelectorAll('#side-bar-primary li');
+function removeSelectedFromAllButtons() {
+    sideBarButtons.forEach(btn => {
+        btn.classList.remove('selected');
+    })
+}
+
+//Event click on sidebar buttons
+sideBarButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        removeSelectedFromAllButtons();
+        btn.classList.add('selected');
+        UI.addFilter(btn.id);
+    })
 })
